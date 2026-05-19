@@ -45,8 +45,9 @@ func main() {
 	mux := http.NewServeMux()
 	h.RegisterRoutes(mux)
 
-	
+	// --- PERBAIKAN SCENARIO 6 (SAST) ---
 
+	// 1. Konfigurasi server dengan timeout untuk memperbaiki celah G114 (DoS Risk)
 	server := &http.Server{
 		Addr:              ":" + port,
 		Handler:           mux,
@@ -56,8 +57,10 @@ func main() {
 		IdleTimeout:       30 * time.Second, // Batas waktu koneksi idle
 	}
 
+	// 2. Tambahkan #nosec G706 untuk memberitahu Gosec bahwa variabel port aman (Log Injection)
 	log.Printf("🚀 TaskFlow API berjalan di :%s", port) // #nosec G706
 
+	// Jalankan server menggunakan konfigurasi yang sudah dibuat
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Server gagal: %v", err)
 	}
