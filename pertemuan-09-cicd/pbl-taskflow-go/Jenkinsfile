@@ -178,7 +178,7 @@ pipeline {
                     sh """
                         RETRIES=10
                         COUNT=0
-                        until curl -sf http://localhost:${MAPPED_PORT}/health; do
+                        until curl -sf http://localhost:${MAPPED_PORT}/healt; do
                             COUNT=\$((COUNT+1))
                             if [ \$COUNT -ge \$RETRIES ]; then
                                 echo "❌ FATAL: Health check gagal!"
